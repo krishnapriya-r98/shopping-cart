@@ -6,7 +6,7 @@
 - User Registartion
 - User login
 - Create / update Product
-- Add product to order
+- Inventory management
 - checkout
 - payment
 
@@ -65,7 +65,6 @@
 ### Login API
     Endpoint: api/v1/login/
     Method: POST
-    Request Headers: Authorization: Bearer <access_token> (Access token obtained from login API)
     Data Payload: 
     {
     "email": "jon@gmail.com",
@@ -86,7 +85,6 @@
     Method: GET
     Request Headers: Authorization: Bearer <access_token> (Access token obtained from login API)
     Response: 
-    ```
     {
     "count": 1,
     "next": null,
@@ -101,7 +99,6 @@
         }
     ]
     }
-    ```
 
 
 
@@ -110,7 +107,6 @@
     Method: GET
     Request Headers: Authorization: Bearer <access_token> (Access token obtained from login API)
     Response: 
-    ```
     {
     "id": 1,
     "name": "test product",
@@ -118,7 +114,7 @@
     "price": "100.00",
     "quantity_available": 98
     }
-    ```
+
 
 ### Products Create API
 
@@ -128,16 +124,13 @@ Only user with `staff` permission can add a product.
     Method: POST
     Request Headers: Authorization: Bearer <access_token> (Access token obtained from login API)
     Data Payload:
-    ```
     {
     "name": "product 1",
     "description": "new pro",
     "quantity_available": 100,
     "price": 10
     }
-    ```
     Response: 
-    ```
     {
     "id": 1,
     "name": "product 1",
@@ -145,42 +138,36 @@ Only user with `staff` permission can add a product.
     "price": "10.00",
     "quantity_available": 10
     }
-    ```
 
 ### Products Update API
 Only user with `staff` permission can edit a product.
 
     Endpoint: /api/v1/products/1/
     Method: PATCH
-    Authorization: Bearer <access_token> (Access token obtained from login API)
+    Request Headers: Authorization: Bearer <access_token> (Access token obtained from login API)
     Data Payload:
-    ```
     {
     "name": "product 1",
     "description": "new pro",
     "quantity_available": 10,
     "price": 100
     }
-    ```
     Response: 
-    ```
+    
     {
     "name": "product 1",
     "description": "new pro",
     "quantity_available": 10
     "price": 100
     }
-    ```
 
 
 ### Orders Listing API
 
     Endpoint: /api/v1/orders/
     Method: GET
-    Authorization: Bearer <access_token> (Access token obtained from login API)
-    ```
+    Request Headers: Authorization: Bearer <access_token> (Access token obtained from login API)
     Response: 
-    ```
     {
         "count": 1,
         "next": null,
@@ -195,14 +182,13 @@ Only user with `staff` permission can edit a product.
             }
         ]
     }
-    ```
 
 ### Orders Retrieve API
 
     Endpoint: /api/v1/orders/1/
     Method: GET
-    Authorization: Bearer <access_token> (Access token obtained from login API)
-    ```
+    Request Headers: Authorization: Bearer <access_token> (Access token obtained from login API)
+    Response: 
         {
             "id": 1,
             "order_status": "SUCCESS",
@@ -210,63 +196,54 @@ Only user with `staff` permission can edit a product.
             "updated_at": "2024-03-16T17:56:01.748118Z",
             "total_amount": 200
         }
-    ```
 
-### Add products to order
+### Add products to cart
 
     Endpoint: /api/v1/order-item/
     Method: POST
-    Authorization: Bearer <access_token> (Access token obtained from login API)
+    Request Headers: Authorization: Bearer <access_token> (Access token obtained from login API)
     Data Payload:
-    ```
     {
     "product": 1,
     "quantity": 1
     }
-    ```
     Response: 
-    ```
     {
     "product": 1,
     "quantity": 1
     }
-    ```
+    
 
     
-### Updated added products to order list
+### Update the product in cart
 
     Endpoint: /api/v1/order-item/1/
     Method: PATCH
-    Authorization: Bearer <access_token> (Access token obtained from login API)
+    Request Headers: Authorization: Bearer <access_token> (Access token obtained from login API)
     Data Payload:
-    ```
     {
     "quantity": 3
     }
-    ```
+    
     Response: 
-    ```
     {
     "product": 1,
     "quantity": 3
     }
-    ```
+    
 
-### Process Payment
+### Checkout Order
 
     Endpoint: /api/v1/payments/
     Method: POST
-    Authorization: Bearer <access_token> (Access token obtained from login API)
+    Request Headers: Authorization: Bearer <access_token> (Access token obtained from login API)
     Data Payload:
-    ```
     {
-    "payment_status": "PENDING",
     "order": "2",
     "payment_mode": "CREDIT_CARD"
     }
-    ```
+
     Response: 
-    ```
     {
         "id": 2,
         "total_amount": "300.00",
@@ -276,23 +253,19 @@ Only user with `staff` permission can edit a product.
         "updated_at": "2024-03-16T18:36:42.608832Z",
         "order": 2
     }
-    ```
 
     
 
-### Save Sucess Payment
+### Marking Payment as sucess (This can be a Payment Gateway API)
 
     Endpoint: /api/v1/payments/1/
     Method: PATCH
-    Authorization: Bearer <access_token> (Access token obtained from login API)
+    Request Headers: Authorization: Bearer <access_token> (Access token obtained from login API)
     Data Payload:
-    ```
     {
     "payment_status": "SUCCESS",
     }
-    ```
     Response: 
-    ```
     {
         "id": 1,
         "total_amount": "246.00",
@@ -302,4 +275,3 @@ Only user with `staff` permission can edit a product.
         "updated_at": "2024-03-16T18:38:27.175201Z",
         "order": 1
     }
-    ```
